@@ -44,15 +44,28 @@
 
 【新增】博客编辑支持上传图片
 
-### 1.0.1 （版本计划）
+### 1.0.1
 
 1. 【优化】使用 nuxt 实现服务端渲染
 2. 【优化】搜索使用 lucene
 3. 【新增】引用百度统计来统计博客的访问量。
-4. 【优化】使用markdown-it渲染markdown语法，markedjs渲染太丑。
-5. 【新增】实现自动部署nuxtapp
-6. 【新增】github添加CI
-7. 【新增】优化SEO
+4. 【优化】使用 markdown-it 渲染 markdown 语法，markedjs 渲染太丑。
+5. 【新增】实现自动部署 nuxtapp
+6. 【新增】github 添加 CI
+7. 【新增】优化 SEO
+
+### 2.0.0
+
+1. 【新增】刷 leetcode 题目，自动同步到本博客。
+
+### 需求
+
+#### 刷 leetcode 题目，自动同步到 noodb 个人博客。
+
+技术实现：
+
+1. 使用 tampermonkey，写一个脚本插件。
+2. 全局拦截一下 LeetCode 的提交代码请求，然后响应正确的话，就直接将代码代码和题目信息，同步到个人博客中。
 
 ### 项目启动
 
@@ -80,4 +93,107 @@ java -jar -Dspring.profiles.active=dev back-end.jar
 
 ### 前端
 
-lcTool主要是在leetcode刷题的时候，将提交的代码和题目，同步到个人播客中，记录下来。
+```shell
+scp -i ~/.ssh/id_rsa -r /Users/noodzhan/IdeaProjects/noodb/front-end/dist ubuntu@1.15.231.74:/home/ubuntu/nblog/front-end
+```
+
+#### 后台
+
+```shell
+
+scp -i ~/.ssh/id_rsa /Users/noodzhan/IdeaProjects/noodb/back-end/build/libs/back-end-1.0.0.jar ubuntu@1.15.231.74:/home/ubuntu/nblog/noodb-blog-jar
+
+```
+
+#### 部署 nuxtapp
+
+1. 上传到服务器
+
+```shell
+scp -i ~/.ssh/id_rsa -r ./.nuxt nuxt.config.js package.json package-lock.json ./static ubuntu@1.15.231.74:/home/ubuntu/nblog/nuxtapp
+```
+
+2. 进入相关目录
+
+```shell
+cd /home/ubuntu/nblog/nuxtapp
+```
+
+3. 安装依赖
+
+```shell
+npm install
+```
+
+4. 后台执行 nuxt
+
+```shell
+nohup npm run start &
+```
+
+5. 验证是否启动
+
+```shell
+curl http://localhost:3000
+```
+
+注意： 杀掉 npm 进程，可能没有用。必须杀掉 3000 端口占用的进程。
+
+查看端口占用进程
+
+```shell
+lsof -i:3000
+```
+
+#### nginx 配置
+
+```shell
+scp -i ~/.ssh/id_rsa nblog-nginx.conf ubuntu@1.15.231.74:/etc/nginx/conf.d
+
+```
+
+```shell
+nginx -t
+```
+
+```shell
+nginx -s reload
+```
+
+### tamperMonkey
+
+#### 使用背景
+
+主要是 chrome 的 cookie 信息，来利用`https://github.com/wechatsync/Wechatsync`这个库来实现，一键 publish ，同步到各个博客网站。
+
+#### 开发环境整理
+
+1. 复制下面到 tamperMonkey 的 js 里面
+
+```js
+// ==UserScript==
+// @name         axios_test
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @description  try to take over the world!
+// @author       You
+// @match        https://noodb.com/*
+// @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
+// @grant        none
+// ==/UserScript==
+
+(function () {
+  "use strict";
+  console.error("test");
+  if (location.href === "http://localhost:8080/") return;
+  var script = document.createElement("script");
+  script.src = "http://localhost:8080/main.bundle.js";
+  document.body.appendChild(script);
+})();
+```
+
+2. 进入 tool 文件夹里面，执行
+
+```
+npm run serve
+```
