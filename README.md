@@ -1,1 +1,2 @@
-# leetcodeTool
+
+lcTool主要是在leetcode刷题的时候，将提交的代码和题目，同步到个人播客中，记录下来。
