@@ -11,7 +11,7 @@ async function gmRequest(config) {
       cookie: config.cookie,
       data: config.data,
       headers: config.headers,
-      responseType: "json",
+      responseType: "json"
     });
     GM_xmlhttpRequest({
       url: config.url,
@@ -21,14 +21,14 @@ async function gmRequest(config) {
       data: config.data,
       headers: config.headers,
       responseType: "json",
-      onload: (resp) => {
+      onload: resp => {
         console.log(resp);
         resolve(resp.response);
       },
-      onerror: (error) => {
+      onerror: error => {
         console.log(error);
         reject(error);
-      },
+      }
     });
   });
 }
@@ -56,13 +56,13 @@ async function save(problemId, problemContent, code, lang) {
     url: "https://noodb.com/api/article/edit",
     data: JSON.stringify({
       title: "leetcode -- " + problemId,
-      content: content,
+      content: content
     }),
     headers: {
       "Content-Type": "application/json; charset=UTF-8",
-      Accept: "application/json",
+      Accept: "application/json"
     },
-    cookie: noodbCookie,
+    cookie: noodbCookie
   });
 }
 
@@ -73,9 +73,9 @@ async function login() {
     data: JSON.stringify({ username: "noodzhan", password: "noodzhan" }),
     headers: {
       "Content-Type": "application/json; charset=UTF-8",
-      Accept: "application/json",
-    },
-  }).then((resp) => {
+      Accept: "application/json"
+    }
+  }).then(resp => {
     console.log(resp);
     if (resp.code == 0) {
       noodbCookie = resp.data.token;
