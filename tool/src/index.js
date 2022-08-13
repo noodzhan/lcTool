@@ -1,86 +1,128 @@
-import addListener from "./listen";
-import generateMarkdown, { getprombleTitle } from "./leetcode";
-import save from "./noodb";
+(function () {
+  if (typeof window.CustomEvent === "function") return false;
 
-function init() {
-  window.article = generateMarkdown();
-  window.problemTitle = getprombleTitle();
-  console.log(window.article);
-  console.log(window.problemTitle);
-}
-
-let timer = undefined;
-
-function checkIsRenender() {
-  let href = window.location.href;
-  let regExp = new RegExp("^https://leetcode.cn/problems/");
-  if (!regExp.test(href)) {
-    return;
-  }
-  let dom = document.querySelector(".notranslate .notranslate");
-  if (dom) {
-    init();
-    mounted(
-      document.querySelector("button[data-cypress='RunCode']").parentElement
+  function CustomEvent(event, params) {
+    params = params || { bubbles: false, cancelable: false, detail: undefined };
+    var evt = document.createEvent("CustomEvent");
+    evt.initCustomEvent(
+      event,
+      params.bubbles,
+      params.cancelable,
+      params.detail
     );
-    if (!timer) {
-      clearTimeout(timer);
-    } else {
-      timer = setTimeout(checkIsRenender, 300);
-    }
+    return evt;
   }
-}
-checkIsRenender();
-
-//对含问题的a标签，添加监听
-let observerDomArray = document.querySelectorAll("a[href^='/problems/']");
-observerDomArray.forEach((dom) => {
-  dom.onclick = init;
-});
-
-function createSyncButton() {
-  let button = document.createElement("button");
-  button.style.width = "80px";
-  button.style.height = "30px";
-  button.textContent = "同步";
-  button.style.fontSize = "13px";
-  button.style.cursor = "pointer";
-  button.style.marginLeft = "10px";
-  button.onclick = () => {
-    console.log("手动同步");
-    save(
-      window.problemTitle,
-      window.article,
-      window.code,
-      window.leetcodeLang
-    ).then((resp) => {
-      if (resp.code == 0) {
-        window.open("https://noodb.com/blog/" + resp.data, "_blank");
-      }
-    });
-  };
-  return button;
-}
-
-function mounted(parent) {
-  if (parent) {
-    parent.appendChild(createSyncButton());
+  CustomEvent.prototype = window.Event.prototype;
+  window.CustomEvent = CustomEvent;
+})();
+(function () {
+  function ajaxEventTrigger(event) {
+    var ajaxEvent = new CustomEvent(event, { detail: this });
+    window.dispatchEvent(ajaxEvent);
   }
-}
 
-addListener("", function (xhr) {
-  console.log(xhr.orignUrl);
-  let reg = new RegExp("^/problems/.+/submit/$");
-  if (reg.test(xhr.orignUrl)) {
-    let data = JSON.parse(xhr.body);
-    window.code = data.typed_code;
-    window.leetcodeLang = data.lang;
-    save(window.problemTitle, window.article, data.typed_code, data.lang).then(
-      (resp) => {
-        if (resp.code == 0) {
-          window.open("https://noodb.com/blog/" + resp.data, "_blank");
-        }
-      }
+  var oldXHR = window.XMLHttpRequest;
+
+  function newXHR() {
+    var realXHR = new oldXHR();
+
+    realXHR.addEventListener(
+      "abort",
+      function () {
+        ajaxEventTrigger.call(this, "ajaxAbort");
+      },
+      false
     );
+    realXHR.addEventListener(
+      "error",
+      function () {
+        ajaxEventTrigger.call(this, "ajaxError");
+      },
+      false
+    );
+    realXHR.addEventListener(
+      "load",
+      function () {
+        ajaxEventTrigger.call(this, "ajaxLoad");
+      },
+      false
+    );
+    realXHR.addEventListener(
+      "loadstart",
+      function () {
+        ajaxEventTrigger.call(this, "ajaxLoadStart");
+      },
+      false
+    );
+    realXHR.addEventListener(
+      "progress",
+      function () {
+        ajaxEventTrigger.call(this, "ajaxProgress");
+      },
+      false
+    );
+    realXHR.addEventListener(
+      "timeout",
+      function () {
+        ajaxEventTrigger.call(this, "ajaxTimeout");
+      },
+      false
+    );
+    realXHR.addEventListener(
+      "loadend",
+      function () {
+        ajaxEventTrigger.call(this, "ajaxLoadEnd");
+      },
+      false
+    );
+    realXHR.addEventListener(
+      "readystatechange",
+      function () {
+        ajaxEventTrigger.call(this, "ajaxReadyStateChange");
+      },
+      false
+    );
+
+    let send = realXHR.send;
+    realXHR.send = function (...arg) {
+      send.apply(realXHR, arg);
+      realXHR.body = arg[0];
+      ajaxEventTrigger.call(realXHR, "ajaxSend");
+    };
+
+    let open = realXHR.open;
+    realXHR.open = function (...arg) {
+      open.apply(realXHR, arg);
+      realXHR.method = arg[0];
+      realXHR.orignUrl = arg[1];
+      realXHR.async = arg[2];
+      ajaxEventTrigger.call(realXHR, "ajaxOpen");
+    };
+
+    let setRequestHeader = realXHR.setRequestHeader;
+    realXHR.requestHeader = {};
+    realXHR.setRequestHeader = function (name, value) {
+      realXHR.requestHeader[name] = value;
+      setRequestHeader.call(realXHR, name, value);
+    };
+    return realXHR;
+  }
+
+  window.XMLHttpRequest = newXHR;
+})();
+var Gpins_data = {};
+// 监听页面的ajax
+window.addEventListener("ajaxReadyStateChange", function (e) {
+  let xhr = e.detail;
+  if (xhr.readyState == 4 && xhr.status == 200) {
+    // xhr.getAllResponseHeaders()  响应头信息
+    // xhr.requestHeader            请求头信息
+    // xhr.responseURL              请求的地址
+    // xhr.responseText             响应内容
+    // xhr.orignUrl                 请求的原始参数地址
+    // xhr.body                     post参数，（get参数在url上面）
+
+    console.log(xhr);
   }
 });
+// console.log({msg:'注入完成',time: (new Date()).valueOf(),data: new Date()});
