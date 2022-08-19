@@ -35,7 +35,7 @@ checkIsRenender();
 
 //对含问题的a标签，添加监听
 let observerDomArray = document.querySelectorAll("a[href^='/problems/']");
-observerDomArray.forEach(dom => {
+observerDomArray.forEach((dom) => {
   dom.onclick = init;
 });
 
@@ -54,7 +54,7 @@ function createSyncButton() {
       window.article,
       window.code,
       window.leetcodeLang
-    ).then(resp => {
+    ).then((resp) => {
       if (resp.code == 0) {
         window.open("https://noodb.com/blog/" + resp.data, "_blank");
       }
@@ -69,7 +69,7 @@ function mounted(parent) {
   }
 }
 
-addListener("", function(xhr) {
+addListener("", function (xhr) {
   console.log(xhr.orignUrl);
   let reg = new RegExp("^/problems/.+/submit/$");
   if (reg.test(xhr.orignUrl)) {
@@ -77,7 +77,7 @@ addListener("", function(xhr) {
     window.code = data.typed_code;
     window.leetcodeLang = data.lang;
     save(window.problemTitle, window.article, data.typed_code, data.lang).then(
-      resp => {
+      (resp) => {
         if (resp.code == 0) {
           window.open("https://noodb.com/blog/" + resp.data, "_blank");
         }
