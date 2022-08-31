@@ -4,7 +4,7 @@
   "description": "a article push in tampermonkey ",
   "main": "index",
   "scripts": {
-    "build": "webpack --config webpack.config.js",
+    "build": "webpack --config webpack.config.js --mode=production",
     "serve": "webpack serve --no-hot"
   },
   "keywords": [

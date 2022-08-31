@@ -27,7 +27,6 @@ unsafeWindow.GM_xmlhttpRequest = GM_xmlhttpRequest;
   window.onload = function () {
   
 `,
-                "\n",
                 old,
                 ` \n  };
 })();`
