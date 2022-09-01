@@ -1,7 +1,9 @@
 import addListener from "./listen";
 import generateMarkdown, { getprombleTitle } from "./leetcode";
 import save from "./noodb";
-
+import vue from "vue";
+import Vue from "vue";
+import App from "App";
 function init() {
   window.article = generateMarkdown();
   window.problemTitle = getprombleTitle();
@@ -10,6 +12,12 @@ function init() {
   );
   console.log(window.article);
   console.log(window.problemTitle);
+  //vue实例化
+  let div = document.createElement("div");
+  div.setAttribute("id", "app");
+  new Vue({
+    render: (h) => App,
+  }).$mount("#app");
 }
 
 let timer = undefined;
