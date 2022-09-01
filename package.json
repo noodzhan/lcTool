@@ -5,7 +5,7 @@
   "main": "index",
   "scripts": {
     "build": "webpack --config webpack.config.js --mode=production",
-    "serve": "webpack serve --no-hot"
+    "serve": "webpack serve --mode=development"
   },
   "keywords": [
     "noodzhan",
@@ -20,11 +20,13 @@
     "turndown": "^7.1.1"
   },
   "devDependencies": {
+    "css-loader": "^6.7.1",
     "html-webpack-plugin": "^5.5.0",
+    "vue": "2.7.10",
+    "vue-loader": "15.10.0",
+    "vue-template-compiler": "^2.7.10",
     "webpack": "^5.73.0",
     "webpack-cli": "^4.10.0",
-    "webpack-dev-server": "^4.9.3",
-    "vue":"2.7.10",
-    "vue-load":"17.0.0"
+    "webpack-dev-server": "^4.9.3"
   }
 }

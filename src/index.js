@@ -1,9 +1,8 @@
 import addListener from "./listen";
 import generateMarkdown, { getprombleTitle } from "./leetcode";
 import save from "./noodb";
-import vue from "vue";
 import Vue from "vue";
-import App from "App";
+import App from "./App.vue";
 function init() {
   window.article = generateMarkdown();
   window.problemTitle = getprombleTitle();
@@ -14,10 +13,12 @@ function init() {
   console.log(window.problemTitle);
   //vue实例化
   let div = document.createElement("div");
-  div.setAttribute("id", "app");
+  div.setAttribute("id", "noodb");
+  document.body.append(div);
+  console.log(div);
   new Vue({
     render: (h) => App,
-  }).$mount("#app");
+  }).$mount("#noodb");
 }
 
 let timer = undefined;

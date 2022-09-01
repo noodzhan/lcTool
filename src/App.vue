@@ -1,9 +1,22 @@
 <template>
-  <div class="container"></div>
+  <div class="container">
+    {{hello}}
+  </div>
 </template>
 <script>
 export default {
   name: "App",
+  data: function (){
+    return {
+      hello: 'hello world'
+    }
+  },
+  created() {
+    console.log('created');
+  },
+  mounted() {
+    console.log('mounted');
+  }
 };
 </script>
 <style scoped>
