@@ -17,7 +17,7 @@ function init() {
   document.body.append(div);
   console.log(div);
   new Vue({
-    render: (h) => App,
+    render: (h) => h(App),
   }).$mount("#noodb");
 }
 
