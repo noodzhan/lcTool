@@ -1,9 +1,9 @@
 function createCustomEvent() {
-  if (typeof window.CustomEvent === "function") return false;
+  if (typeof window.CustomEvent === 'function') return false;
 
   function CustomEvent(event, params) {
     params = params || { bubbles: false, cancelable: false, detail: undefined };
-    var evt = document.createEvent("CustomEvent");
+    var evt = document.createEvent('CustomEvent');
     evt.initCustomEvent(
       event,
       params.bubbles,
@@ -31,81 +31,81 @@ function listen() {
     var realXHR = new oldXHR();
 
     realXHR.addEventListener(
-      "abort",
-      function() {
-        ajaxEventTrigger.call(this, "ajaxAbort");
+      'abort',
+      function () {
+        ajaxEventTrigger.call(this, 'ajaxAbort');
       },
       false
     );
     realXHR.addEventListener(
-      "error",
-      function() {
-        ajaxEventTrigger.call(this, "ajaxError");
+      'error',
+      function () {
+        ajaxEventTrigger.call(this, 'ajaxError');
       },
       false
     );
     realXHR.addEventListener(
-      "load",
-      function() {
-        ajaxEventTrigger.call(this, "ajaxLoad");
+      'load',
+      function () {
+        ajaxEventTrigger.call(this, 'ajaxLoad');
       },
       false
     );
     realXHR.addEventListener(
-      "loadstart",
-      function() {
-        ajaxEventTrigger.call(this, "ajaxLoadStart");
+      'loadstart',
+      function () {
+        ajaxEventTrigger.call(this, 'ajaxLoadStart');
       },
       false
     );
     realXHR.addEventListener(
-      "progress",
-      function() {
-        ajaxEventTrigger.call(this, "ajaxProgress");
+      'progress',
+      function () {
+        ajaxEventTrigger.call(this, 'ajaxProgress');
       },
       false
     );
     realXHR.addEventListener(
-      "timeout",
-      function() {
-        ajaxEventTrigger.call(this, "ajaxTimeout");
+      'timeout',
+      function () {
+        ajaxEventTrigger.call(this, 'ajaxTimeout');
       },
       false
     );
     realXHR.addEventListener(
-      "loadend",
-      function() {
-        ajaxEventTrigger.call(this, "ajaxLoadEnd");
+      'loadend',
+      function () {
+        ajaxEventTrigger.call(this, 'ajaxLoadEnd');
       },
       false
     );
     realXHR.addEventListener(
-      "readystatechange",
-      function() {
-        ajaxEventTrigger.call(this, "ajaxReadyStateChange");
+      'readystatechange',
+      function () {
+        ajaxEventTrigger.call(this, 'ajaxReadyStateChange');
       },
       false
     );
 
     let send = realXHR.send;
-    realXHR.send = function(...arg) {
+    realXHR.send = function (...arg) {
       send.apply(realXHR, arg);
       realXHR.body = arg[0];
-      ajaxEventTrigger.call(realXHR, "ajaxSend");
+      ajaxEventTrigger.call(realXHR, 'ajaxSend');
     };
 
     let open = realXHR.open;
-    realXHR.open = function(...arg) {
+    realXHR.open = function (...arg) {
       open.apply(realXHR, arg);
       realXHR.method = arg[0];
       realXHR.orignUrl = arg[1];
       realXHR.async = arg[2];
-      ajaxEventTrigger.call(realXHR, "ajaxOpen");
+      ajaxEventTrigger.call(realXHR, 'ajaxOpen');
     };
 
     let setRequestHeader = realXHR.setRequestHeader;
     realXHR.requestHeader = {};
-    realXHR.setRequestHeader = function(name, value) {
+    realXHR.setRequestHeader = function (name, value) {
       realXHR.requestHeader[name] = value;
       setRequestHeader.call(realXHR, name, value);
     };
@@ -120,7 +120,7 @@ listen();
 
 function addListener(eventName, callback) {
   if (!eventName) {
-    window.addEventListener("ajaxReadyStateChange", function(e) {
+    window.addEventListener('ajaxReadyStateChange', function (e) {
       let xhr = e.detail;
       if (xhr.readyState == 4 && xhr.status == 200) {
         // xhr.getAllResponseHeaders()  响应头信息
@@ -133,7 +133,7 @@ function addListener(eventName, callback) {
       }
     });
   }
-  window.addEventListener(eventName, function(e) {
+  window.addEventListener(eventName, function (e) {
     let xhr = e.detail;
     if (xhr.readyState == 4 && xhr.status == 200) {
       // xhr.getAllResponseHeaders()  响应头信息

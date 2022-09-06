@@ -42,55 +42,55 @@ import {
   EngineeringVehicle,
   UploadTwo,
   Perspective,
-  FileCode,
-} from "@icon-park/vue";
-import "@icon-park/vue/styles/index.css";
-import initLeetCode from "./leetcode";
-import save from "./noodb/noodb";
+  FileCode
+} from '@icon-park/vue';
+import '@icon-park/vue/styles/index.css';
+import initLeetCode from './leetcode';
+import save from './noodb/noodb';
 export default {
-  name: "App",
+  name: 'App',
   components: {
     EngineeringVehicle,
     UploadTwo,
     Perspective,
-    FileCode,
+    FileCode
   },
   data: function () {
     return {
-      hello: "hello world",
+      hello: 'hello world',
       isActive: false,
       initLeetCode: initLeetCode,
       save: save
     };
   },
   created() {
-    console.log("created");
+    console.log('created');
     initLeetCode();
   },
   mounted() {
-    console.log("mounted");
+    console.log('mounted');
   },
   methods: {
     onClickCode() {
-      console.log("click code mennu");
+      console.log('click code mennu');
       save(
-          window.problemTitle,
-          window.article,
-          window.code,
-          window.leetcodeLang
+        window.problemTitle,
+        window.article,
+        window.code,
+        window.leetcodeLang
       ).then((resp) => {
         if (resp.code == 0) {
-          window.open("https://noodb.com/blog/" + resp.data, "_blank");
+          window.open('https://noodb.com/blog/' + resp.data, '_blank');
         }
       });
     },
     onExtractArticle() {
-      console.log("click extract article mennu");
+      console.log('click extract article mennu');
     },
     onClickSync() {
-      console.log("click sync mennu");
-    },
-  },
+      console.log('click sync mennu');
+    }
+  }
 };
 </script>
 <style scoped lang="css">

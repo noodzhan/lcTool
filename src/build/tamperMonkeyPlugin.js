@@ -1,10 +1,10 @@
-const { ConcatSource, OriginalSource } = require("webpack-sources");
-const fs = require("fs");
+const { ConcatSource, OriginalSource } = require('webpack-sources');
+const fs = require('fs');
 class TampermonkeyPlugin {
   apply(compiler) {
     // 指定一个挂载到 webpack 自身的事件钩子。
-    compiler.hooks.compilation.tap("TampermonkeyPlugin", (compilation) => {
-      compilation.hooks.afterProcessAssets.tap("TampermonkeyPlugin", () => {
+    compiler.hooks.compilation.tap('TampermonkeyPlugin', (compilation) => {
+      compilation.hooks.afterProcessAssets.tap('TampermonkeyPlugin', () => {
         for (const chunk of compilation.chunks) {
           for (const file of chunk.files) {
             compilation.updateAsset(file, (old) => {

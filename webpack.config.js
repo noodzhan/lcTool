@@ -1,15 +1,15 @@
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const TampermonkeyPlugin = require("./src/build/tamperMonkeyPlugin");
-const { VueLoaderPlugin } = require('vue-loader')
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const TampermonkeyPlugin = require('./src/build/tamperMonkeyPlugin');
+const { VueLoaderPlugin } = require('vue-loader');
 
 module.exports = (env, argv) => {
   let config = {
-    mode: process.env.NODE_ENV || "production",
-    devtool: process.env.NODE_ENV == "production" ? false : "source-map",
+    mode: process.env.NODE_ENV || 'production',
+    devtool: process.env.NODE_ENV == 'production' ? false : 'source-map',
     output: {
-      filename: "[name].bundle.js",
-      path: __dirname + "/dist",
+      filename: '[name].bundle.js',
+      path: __dirname + '/dist'
     },
     module: {
       rules: [
@@ -19,32 +19,28 @@ module.exports = (env, argv) => {
         },
         {
           test: /\.css$/,
-          use: [
-            'vue-style-loader',
-            'css-loader'
-          ]
+          use: ['vue-style-loader', 'css-loader']
         }
       ]
     },
     plugins: [],
     devServer: {
-      host: "localhost",
+      host: 'localhost',
       port: 8080,
       hot: false,
       client: {
-        reconnect: false,
-      },
-    },
+        reconnect: false
+      }
+    }
   };
-  if (argv.mode === "development") {
-    config.devtool = "source-map";
+  if (argv.mode === 'development') {
+    config.devtool = 'source-map';
     config.plugins.push(new HtmlWebpackPlugin());
     config.plugins.push(new VueLoaderPlugin());
   }
 
-  if (argv.mode === "production") {
+  if (argv.mode === 'production') {
     config.plugins.push(new TampermonkeyPlugin());
-    config.plugins.push(new HtmlWebpackPlugin());
     config.plugins.push(new VueLoaderPlugin());
     config.devtool = false;
   }

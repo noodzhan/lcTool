@@ -1,4 +1,4 @@
-let noodbCookie = "";
+let noodbCookie = '';
 
 async function gmRequest(config) {
   let GM_xmlhttpRequest = window.GM_xmlhttpRequest;
@@ -11,7 +11,7 @@ async function gmRequest(config) {
       cookie: config.cookie,
       data: config.data,
       headers: config.headers,
-      responseType: "json"
+      responseType: 'json'
     });
     GM_xmlhttpRequest({
       url: config.url,
@@ -20,12 +20,12 @@ async function gmRequest(config) {
       cookie: config.cookie,
       data: config.data,
       headers: config.headers,
-      responseType: "json",
-      onload: resp => {
+      responseType: 'json',
+      onload: (resp) => {
         console.log(resp);
         resolve(resp.response);
       },
-      onerror: error => {
+      onerror: (error) => {
         console.log(error);
         reject(error);
       }
@@ -52,15 +52,15 @@ async function save(problemId, problemContent, code, lang) {
   await getCookie();
   //新增
   return gmRequest({
-    method: "POST",
-    url: "https://noodb.com/api/article/edit",
+    method: 'POST',
+    url: 'https://noodb.com/api/article/edit',
     data: JSON.stringify({
-      title: "leetcode -- " + problemId,
+      title: 'leetcode -- ' + problemId,
       content: content
     }),
     headers: {
-      "Content-Type": "application/json; charset=UTF-8",
-      Accept: "application/json"
+      'Content-Type': 'application/json; charset=UTF-8',
+      Accept: 'application/json'
     },
     cookie: noodbCookie
   });
@@ -68,14 +68,14 @@ async function save(problemId, problemContent, code, lang) {
 
 async function login() {
   return gmRequest({
-    url: "https://noodb.com/api/user/login",
-    method: "POST",
-    data: JSON.stringify({ username: "noodzhan", password: "noodzhan" }),
+    url: 'https://noodb.com/api/user/login',
+    method: 'POST',
+    data: JSON.stringify({ username: 'noodzhan', password: 'noodzhan' }),
     headers: {
-      "Content-Type": "application/json; charset=UTF-8",
-      Accept: "application/json"
+      'Content-Type': 'application/json; charset=UTF-8',
+      Accept: 'application/json'
     }
-  }).then(resp => {
+  }).then((resp) => {
     console.log(resp);
     if (resp.code == 0) {
       noodbCookie = resp.data.token;

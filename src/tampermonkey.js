@@ -11,11 +11,11 @@
 // ==/UserScript==
 unsafeWindow.GM_xmlhttpRequest = GM_xmlhttpRequest;
 (function () {
-  "use strict";
-  if (location.href === "http://localhost:8080/") return;
+  'use strict';
+  if (location.href === 'http://localhost:8080/') return;
   window.onload = function () {
-    var script = document.createElement("script");
-    script.src = "http://localhost:8080/main.bundle.js";
+    var script = document.createElement('script');
+    script.src = 'http://localhost:8080/main.bundle.js';
     document.body.appendChild(script);
   };
 })();
