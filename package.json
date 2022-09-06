@@ -14,6 +14,7 @@
   "author": "noodzhan",
   "license": "ISC",
   "dependencies": {
+    "@icon-park/vue": "^1.4.2",
     "axios": "^0.27.2",
     "crypto-js": "^4.1.1",
     "request": "^2.88.2",

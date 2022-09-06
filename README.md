@@ -26,3 +26,7 @@ npm run serve
 
 3、看看生效即可。
 ![img.png](doc/asserts/tampermonkeyActive.png)
+
+# 开发工具搭建
+
+[https://vue-loader.vuejs.org/zh/guide/#vue-cli](https://vue-loader.vuejs.org/zh/guide/#vue-cli)

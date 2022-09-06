@@ -27,6 +27,14 @@ function checkIsRenender() {
   let href = window.location.href;
   let regExp = new RegExp("^https://leetcode.cn/problems/");
   if (!regExp.test(href)) {
+    //vue实例化
+    let div = document.createElement("div");
+    div.setAttribute("id", "noodb");
+    document.body.append(div);
+    console.log(div);
+    new Vue({
+      render: (h) => h(App),
+    }).$mount("#noodb");
     return;
   }
   let dom = document.querySelector(".notranslate .notranslate");
