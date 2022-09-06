@@ -1,6 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const TampermonkeyPlugin = require("./src/tamperMonkeyPlugin");
+const TampermonkeyPlugin = require("./src/build/tamperMonkeyPlugin");
 const { VueLoaderPlugin } = require('vue-loader')
 
 module.exports = (env, argv) => {

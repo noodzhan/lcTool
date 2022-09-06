@@ -45,6 +45,8 @@ import {
   FileCode,
 } from "@icon-park/vue";
 import "@icon-park/vue/styles/index.css";
+import initLeetCode from "./leetcode";
+import save from "./noodb/noodb";
 export default {
   name: "App",
   components: {
@@ -57,10 +59,13 @@ export default {
     return {
       hello: "hello world",
       isActive: false,
+      initLeetCode: initLeetCode,
+      save: save
     };
   },
   created() {
     console.log("created");
+    initLeetCode();
   },
   mounted() {
     console.log("mounted");
@@ -68,6 +73,16 @@ export default {
   methods: {
     onClickCode() {
       console.log("click code mennu");
+      save(
+          window.problemTitle,
+          window.article,
+          window.code,
+          window.leetcodeLang
+      ).then((resp) => {
+        if (resp.code == 0) {
+          window.open("https://noodb.com/blog/" + resp.data, "_blank");
+        }
+      });
     },
     onExtractArticle() {
       console.log("click extract article mennu");
