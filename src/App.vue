@@ -72,12 +72,24 @@ export default {
   },
   methods: {
     onClickCode() {
-      console.log('click code mennu');
+      let article = window.leetCodeArticle;
+      if (
+        !(
+          article &&
+          article.problemTitle &&
+          article.article &&
+          article.code &&
+          article.leetcodeLang
+        )
+      ) {
+        console.error('获取leetcode代码错误');
+        return;
+      }
       save(
-        window.problemTitle,
-        window.article,
-        window.code,
-        window.leetcodeLang
+        article.problemTitle,
+        article.article,
+        article.code,
+        article.leetcodeLang
       ).then((resp) => {
         if (resp.code == 0) {
           window.open('https://noodb.com/blog/' + resp.data, '_blank');
@@ -111,7 +123,6 @@ export default {
 }
 .menu {
   height: 130px;
-  widows: 90px;
 }
 .menu:hover .icon-item-menu {
   opacity: 1;

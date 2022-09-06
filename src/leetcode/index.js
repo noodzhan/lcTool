@@ -1,10 +1,11 @@
 import addListener from './listen';
 import generateMarkdown, { getprombleTitle } from './leetcode';
 function init() {
-  window.article = generateMarkdown();
-  window.problemTitle = getprombleTitle();
-  console.log(window.article);
-  console.log(window.problemTitle);
+  window.leetCodeArticle = {};
+  window.leetCodeArticle.article = generateMarkdown();
+  window.leetCodeArticle.problemTitle = getprombleTitle();
+  // console.log(window.article);
+  // console.log(window.problemTitle);
   listenATag();
 }
 
@@ -37,14 +38,17 @@ function listenATag() {
 }
 
 export default function initLeetCode() {
+  window.leetCodeArticle = {};
   //添加监听
   addListener('', function (xhr) {
-    console.log(xhr.orignUrl);
+    // console.log(xhr.orignUrl);
     let reg = new RegExp('^/problems/.+/submit/$');
-    if (reg.test(xhr.orignUrl)) {
+    let reg2 = new RegExp('^/problems/.+/interpret_solution/$');
+    if (reg.test(xhr.orignUrl) || reg2.test(xhr.orignUrl)) {
       let data = JSON.parse(xhr.body);
-      window.code = data.typed_code;
-      window.leetcodeLang = data.lang;
+      // console.log(data);
+      window.leetCodeArticle.code = data.typed_code;
+      window.leetCodeArticle.leetcodeLang = data.lang;
     }
   });
   //检查leetcode页面是否渲染结束,结束后初始化
