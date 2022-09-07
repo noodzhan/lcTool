@@ -46,7 +46,7 @@ export default function initLeetCode() {
     let reg2 = new RegExp('^/problems/.+/interpret_solution/$');
     if (reg.test(xhr.orignUrl) || reg2.test(xhr.orignUrl)) {
       let data = JSON.parse(xhr.body);
-      // console.log(data);
+      console.log(data);
       window.leetCodeArticle.code = data.typed_code;
       window.leetCodeArticle.leetcodeLang = data.lang;
     }
