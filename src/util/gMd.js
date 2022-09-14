@@ -1,26 +1,31 @@
 import TurndownService from 'turndown';
+import syncConfig from '../config';
 function dispatch() {
   let turndownService = new TurndownService();
   let href = window.location.href;
-  let csdnReg = new RegExp('^https://blog.csdn.net/');
-  if (csdnReg.test(href)) {
-    let dom = extractDom();
-    let markdown = turndownService.turndown(dom);
-    return {
-      title: extractTitle(),
-      content: markdown
-    };
+  console.log(syncConfig);
+  for (let config of syncConfig) {
+    console.log(config);
+    let csdnReg = config.reg;
+    if (csdnReg.test(href)) {
+      let dom = extractDom(config.contentSelector);
+      let markdown = turndownService.turndown(dom);
+      return {
+        title: extractTitle(config.titleSelector),
+        content: markdown
+      };
+    }
   }
-  return {};
+  return undefined;
 }
 
-function extractDom() {
-  let dom = document.querySelector('#content_views');
+function extractDom(domSelector) {
+  let dom = document.querySelector(domSelector);
   return dom;
 }
 
-function extractTitle() {
-  return document.querySelector('#articleContentId').textContent;
+function extractTitle(domSelector) {
+  return document.querySelector(domSelector).textContent;
 }
 
 export default dispatch;

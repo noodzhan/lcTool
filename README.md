@@ -9,6 +9,8 @@ lcTool 主要是在 leetcode 刷题的时候，将提交的代码和题目，同
 
 3、支持登录方式。
 
+4、支持在各个博客网站，将文章同步到个人博客。
+
 # 实现技术
 
 使用 tampermonkey 插件，使用自己开发的脚本实现。
@@ -30,3 +32,13 @@ npm run serve
 # 开发工具搭建
 
 [https://vue-loader.vuejs.org/zh/guide/#vue-cli](https://vue-loader.vuejs.org/zh/guide/#vue-cli)
+
+# 支持的博客网站
+
+| 网站         | 地址                                                           | 是否支持 |
+| ------------ | -------------------------------------------------------------- | -------- |
+| csdn         | [https://blog.csdn.net/](https://blog.csdn.net/)               | 支持     |
+| 简书         | [https://www.jianshu.com/](https://www.jianshu.com/)           | 支持     |
+| segmentfault | [https://www.segmentfault.com/](https://www.segmentfault.com/) | 支持     |
+| 掘金         | [https://juejin.cn/](https://juejin.cn/)                       | 支持     |
+| cnblogs      | [https://www.cnblogs.com/](https://www.cnblogs.com/)           | 支持     |

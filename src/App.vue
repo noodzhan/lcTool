@@ -102,11 +102,12 @@ export default {
     onExtractArticle() {
       console.log('click extract article mennu');
       let article = dispatch();
-      saveArticle(article.content, article.title).then((resp) => {
-        if (resp.code == 0) {
-          window.open('https://noodb.com/blog/' + resp.data, '_blank');
-        }
-      });
+      article &&
+        saveArticle(article.content, article.title).then((resp) => {
+          if (resp.code == 0) {
+            window.open('https://noodb.com/blog/' + resp.data, '_blank');
+          }
+        });
     },
     onClickSync() {
       console.log('click sync mennu');
