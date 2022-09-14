@@ -10,12 +10,17 @@ class TampermonkeyPlugin {
             compilation.updateAsset(file, (old) => {
               return new ConcatSource(
                 `// ==UserScript==
-// @name         leetcode
+// @name         blogTools
 // @namespace    http://tampermonkey.net/
 // @version      0.1
 // @description  leetcode push tool!
-// @author       You
+// @author       https://github.com/noodzhan
 // @match        https://leetcode.cn/problems/*
+// @match        https://blog.csdn.net/*/article/details/*
+// @match        https://www.jianshu.com/p/*
+// @match        https://segmentfault.com/q/*
+// @match        https://juejin.cn/post/*
+// @match        https://www.cnblogs.com/*
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // @grant        GM_xmlhttpRequest
 // @connect      noodb.com

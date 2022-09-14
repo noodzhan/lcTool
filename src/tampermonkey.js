@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         leetcode
+// @name         blogTools
 // @namespace    http://tampermonkey.net/
 // @version      0.1
 // @description  leetcode push tool!
