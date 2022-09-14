@@ -66,6 +66,27 @@ async function save(problemId, problemContent, code, lang) {
   });
 }
 
+async function saveArticle(content, title) {
+  if (isExist()) {
+    //更新
+  }
+  await getCookie();
+  //新增
+  return gmRequest({
+    method: 'POST',
+    url: 'https://noodb.com/api/article/edit',
+    data: JSON.stringify({
+      title: title,
+      content: content
+    }),
+    headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+      Accept: 'application/json'
+    },
+    cookie: noodbCookie
+  });
+}
+
 async function login() {
   return gmRequest({
     url: 'https://noodb.com/api/user/login',
@@ -93,3 +114,4 @@ async function getCookie() {
 }
 
 export default save;
+export { saveArticle };

@@ -5,6 +5,7 @@
 // @description  leetcode push tool!
 // @author       You
 // @match        https://leetcode.cn/problems/*
+// @match        https://blog.csdn.net/*/article/details/*
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // @grant        GM_xmlhttpRequest
 // @connect      noodb.com

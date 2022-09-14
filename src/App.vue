@@ -46,7 +46,8 @@ import {
 } from '@icon-park/vue';
 import '@icon-park/vue/styles/index.css';
 import initLeetCode from './leetcode';
-import save from './noodb/noodb';
+import save, { saveArticle } from './noodb/noodb';
+import dispatch from './util/gMd';
 export default {
   name: 'App',
   components: {
@@ -60,7 +61,9 @@ export default {
       hello: 'hello world',
       isActive: false,
       initLeetCode: initLeetCode,
-      save: save
+      save: save,
+      saveArticle: saveArticle,
+      dispatch: dispatch
     };
   },
   created() {
@@ -98,6 +101,12 @@ export default {
     },
     onExtractArticle() {
       console.log('click extract article mennu');
+      let article = dispatch();
+      saveArticle(article.content, article.title).then((resp) => {
+        if (resp.code == 0) {
+          window.open('https://noodb.com/blog/' + resp.data, '_blank');
+        }
+      });
     },
     onClickSync() {
       console.log('click sync mennu');
@@ -110,6 +119,7 @@ export default {
   position: fixed;
   right: 0px;
   bottom: 30vh;
+  width: 100px;
 }
 .icon-main-menu,
 .icon-item-menu {
@@ -117,6 +127,7 @@ export default {
   display: block;
   opacity: 1;
   padding: 5px;
+  width: 100px;
 }
 .icon-item-menu {
   opacity: 0;
