@@ -1,4 +1,6 @@
 let noodbCookie = '';
+let username = '';
+let password = '';
 
 async function gmRequest(config) {
   let GM_xmlhttpRequest = window.GM_xmlhttpRequest;
@@ -91,7 +93,7 @@ async function login() {
   return gmRequest({
     url: 'https://noodb.com/api/user/login',
     method: 'POST',
-    data: JSON.stringify({ username: 'noodzhan', password: 'noodzhan' }),
+    data: JSON.stringify({ username: username, password: password }),
     headers: {
       'Content-Type': 'application/json; charset=UTF-8',
       Accept: 'application/json'
@@ -110,8 +112,18 @@ async function getCookie() {
   if (noodbCookie) {
     return noodbCookie;
   }
+  //弹出密码框
   return login();
+}
+function isLogin() {
+  console.log(noodbCookie);
+  return noodbCookie != '';
+}
+
+function setUsernameAndPassword(uname, pwd) {
+  username = uname;
+  password = pwd;
 }
 
 export default save;
-export { saveArticle };
+export { saveArticle, isLogin, setUsernameAndPassword };

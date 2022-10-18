@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="lctool-container" :class="{ 'login-show': isShowLoginModal }">
     <div class="menu">
       <perspective
         theme="outline"
@@ -35,6 +35,7 @@
         @click="onClickSync"
       />
     </div>
+    <login v-if="isShowLoginModal" @login="onLogin"></login>
   </div>
 </template>
 <script>
@@ -46,7 +47,12 @@ import {
 } from '@icon-park/vue';
 import '@icon-park/vue/styles/index.css';
 import initLeetCode from './leetcode';
-import save, { saveArticle } from './noodb/noodb';
+import Login from './view/Login.vue';
+import save, {
+  saveArticle,
+  isLogin,
+  setUsernameAndPassword
+} from './noodb/noodb';
 import dispatch from './util/gMd';
 export default {
   name: 'App',
@@ -54,7 +60,8 @@ export default {
     EngineeringVehicle,
     UploadTwo,
     Perspective,
-    FileCode
+    FileCode,
+    Login
   },
   data: function () {
     return {
@@ -63,7 +70,10 @@ export default {
       initLeetCode: initLeetCode,
       save: save,
       saveArticle: saveArticle,
-      dispatch: dispatch
+      isLogin: isLogin,
+      setUsernameAndPassword: setUsernameAndPassword,
+      dispatch: dispatch,
+      isShowLoginModal: false
     };
   },
   created() {
@@ -102,12 +112,29 @@ export default {
     onExtractArticle() {
       console.log('click extract article mennu');
       let article = dispatch();
+      if (!isLogin()) {
+        //弹出东西来
+        this.isShowLoginModal = true;
+      } else {
+        article &&
+          saveArticle(article.content, article.title).then((resp) => {
+            if (resp.code == 0) {
+              window.open('https://noodb.com/blog/' + resp.data, '_blank');
+            }
+          });
+      }
+    },
+    onLogin(event) {
+      console.log(event);
+      this.setUsernameAndPassword(event.username, event.password);
+      let article = dispatch();
       article &&
         saveArticle(article.content, article.title).then((resp) => {
           if (resp.code == 0) {
             window.open('https://noodb.com/blog/' + resp.data, '_blank');
           }
         });
+      this.isShowLoginModal = false;
     },
     onClickSync() {
       console.log('click sync mennu');
@@ -116,11 +143,20 @@ export default {
 };
 </script>
 <style scoped lang="css">
-.container {
+.lctool-container {
   position: fixed;
   right: 0px;
   bottom: 30vh;
   width: 100px;
+  z-index: 1000;
+}
+.lctool-container.login-show {
+  right: initial;
+  width: 500px;
+  background-color: white;
+  left: calc(50vw - 250px);
+  border: 1px solid silver;
+  padding: 20px;
 }
 .icon-main-menu,
 .icon-item-menu {
@@ -135,6 +171,9 @@ export default {
 }
 .menu {
   height: 130px;
+}
+.login-show .menu {
+  display: none;
 }
 .menu:hover .icon-item-menu {
   opacity: 1;
