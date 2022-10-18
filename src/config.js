@@ -6,7 +6,7 @@ var syncConfig = [
     classfication: 'csdn'
   },
   {
-    reg: new RegExp('^https://segmentfault.com/q/'),
+    reg: new RegExp('^https://segmentfault.com/'),
     titleSelector: '.h2.mb-3>a',
     contentSelector: 'article',
     classfication: 'segmentfault'
