@@ -19,6 +19,7 @@
             type="password"
             class="ant-input custom-input"
             v-model="password"
+            @keyup.enter="onLogin"
           />
         </div>
         <div style="display: flex; width: 300px; margin: 0 auto">

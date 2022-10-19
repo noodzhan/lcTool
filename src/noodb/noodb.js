@@ -52,6 +52,9 @@ async function save(problemId, problemContent, code, lang) {
     //更新
   }
   await getCookie();
+  if (noodbCookie === '') {
+    console.error('登录错误');
+  }
   //新增
   return gmRequest({
     method: 'POST',
@@ -62,9 +65,9 @@ async function save(problemId, problemContent, code, lang) {
     }),
     headers: {
       'Content-Type': 'application/json; charset=UTF-8',
-      Accept: 'application/json'
-    },
-    cookie: noodbCookie
+      Accept: 'application/json',
+      Authorization: 'Bearer ' + noodbCookie
+    }
   });
 }
 
@@ -73,6 +76,9 @@ async function saveArticle(content, title) {
     //更新
   }
   await getCookie();
+  if (noodbCookie === '') {
+    console.error('登录错误');
+  }
   //新增
   return gmRequest({
     method: 'POST',
@@ -83,9 +89,9 @@ async function saveArticle(content, title) {
     }),
     headers: {
       'Content-Type': 'application/json; charset=UTF-8',
-      Accept: 'application/json'
-    },
-    cookie: noodbCookie
+      Accept: 'application/json',
+      Authorization: 'Bearer ' + noodbCookie
+    }
   });
 }
 
@@ -101,9 +107,9 @@ async function login() {
   }).then((resp) => {
     console.log(resp);
     if (resp.code == 0) {
-      noodbCookie = resp.data.token;
+      noodbCookie = window.btoa(resp.data.token);
       console.log(noodbCookie);
-      return resp.data.token;
+      return noodbCookie;
     }
   });
 }
