@@ -1,3 +1,4 @@
+import * as globeStore from '../util/share';
 let noodbCookie = '';
 let username = '';
 let password = '';
@@ -108,7 +109,9 @@ async function login() {
     console.log(resp);
     if (resp.code == 0) {
       noodbCookie = window.btoa(resp.data.token);
+      globeStore.setGlobleValue('token', noodbCookie);
       console.log(noodbCookie);
+      console.log(globeStore.getGlobleValue('token'));
       return noodbCookie;
     }
   });
@@ -118,11 +121,20 @@ async function getCookie() {
   if (noodbCookie) {
     return noodbCookie;
   }
+  let token = globeStore.getGlobleValue('token');
+  if (token) {
+    noodbCookie = token;
+    return token;
+  }
   //弹出密码框
   return login();
 }
 function isLogin() {
   console.log(noodbCookie);
+  let token = globeStore.getGlobleValue('token');
+  if (token) {
+    noodbCookie = token;
+  }
   return noodbCookie != '';
 }
 

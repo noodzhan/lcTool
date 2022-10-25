@@ -26,6 +26,8 @@ class TampermonkeyPlugin {
 // @connect      noodb.com
 // ==/UserScript==
 unsafeWindow.GM_xmlhttpRequest = GM_xmlhttpRequest;
+unsafeWindow.GM_setValue = GM_setValue;
+unsafeWindow.GM_getValue= GM_getValue;
 (function () {
   "use strict";
   if (location.href === "http://localhost:8080/") return;

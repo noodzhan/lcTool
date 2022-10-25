@@ -5,7 +5,7 @@
       aria-label="close"
       class="anticon anticon-close"
       style="cursor: pointer; float: right"
-      :v-if="isShowLoginModal"
+      v-if="isShowLoginModal"
       @click="
         () => {
           this.isShowLoginModal = false;
