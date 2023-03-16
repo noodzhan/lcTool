@@ -12,7 +12,7 @@ class TampermonkeyPlugin {
                 `// ==UserScript==
 // @name         blogTools
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.2
 // @description  leetcode push tool!
 // @author       https://github.com/noodzhan
 // @match        https://leetcode.cn/problems/*
@@ -23,6 +23,8 @@ class TampermonkeyPlugin {
 // @match        https://www.cnblogs.com/*
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // @grant        GM_xmlhttpRequest
+// @grant        GM_setValue
+// @grant        GM_getValue
 // @connect      noodb.com
 // ==/UserScript==
 unsafeWindow.GM_xmlhttpRequest = GM_xmlhttpRequest;
