@@ -86,7 +86,10 @@ async function saveArticle(content, title) {
     url: 'https://noodb.com/api/article/edit',
     data: JSON.stringify({
       title: title,
-      content: content
+      content: content,
+      categoryId: 9999,
+      createBy: 9999,
+      updateBy: 9999
     }),
     headers: {
       'Content-Type': 'application/json; charset=UTF-8',
