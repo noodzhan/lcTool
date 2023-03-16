@@ -72,6 +72,12 @@ async function save(problemId, problemContent, code, lang) {
   });
 }
 
+function reprintAppend() {
+  return `### [转载 ->](${window.location.href}) <${window.location.href}>
+
+`
+}
+
 async function saveArticle(content, title) {
   if (isExist()) {
     //更新
@@ -86,7 +92,7 @@ async function saveArticle(content, title) {
     url: 'https://noodb.com/api/article/edit',
     data: JSON.stringify({
       title: title,
-      content: content,
+      content: reprintAppend() + content,
       categoryId: 9999,
       createBy: 9999,
       updateBy: 9999
